@@ -13,6 +13,7 @@
       --purple-lt:  #9D94DC;
       --purple-bg:  #EEEAFF;
       --amber:      #E8A020;
+      --amber-lt:   #F5C060;
       --amber-bg:   #FEF6E4;
       --blue:       #3B9EDE;
       --blue-bg:    #E6F4FC;
@@ -29,580 +30,400 @@
       --border:     #E2E8F0;
       --shadow:     0 2px 16px rgba(0,0,0,0.07);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
+    /* ── NAVBAR ──────────────────────────────────────── */
+    .navbar { background: var(--navy); height: 58px; padding: 0 2rem; display: flex; align-items: center; gap: 1rem; position: sticky; top: 0; z-index: 10; }
+    .brand { display: flex; align-items: center; gap: 0.6rem; color: white; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-badge { background: var(--purple); color: white; font-size: 0.75rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 6px; }
+    .nav-sub { margin-left: auto; color: rgba(255,255,255,0.4); font-size: 0.82rem; }
+    .nav-back { background: none; border: none; color: rgba(255,255,255,0.65); font-size: 0.82rem; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.6rem; border-radius: 6px; transition: background 0.15s; }
+    .nav-back:hover { background: rgba(255,255,255,0.08); }
 
-    /* ── NAVBAR ──────────────────────────────────────────── */
-    .navbar {
-      background: var(--navy);
-      height: 58px;
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      color: white;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .brand-badge {
-      background: var(--purple);
-      color: white;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.15rem 0.55rem;
-      border-radius: 6px;
-    }
-    .nav-sub {
-      margin-left: auto;
-      color: rgba(255,255,255,0.4);
-      font-size: 0.82rem;
-    }
+    /* ── PAGE HEADER ─────────────────────────────────── */
+    .page-header { max-width: 1160px; margin: 0 auto; padding: 0.85rem 2rem 0; }
+    .page-header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+    .page-header p { color: var(--muted); font-size: 0.82rem; margin-top: 0.15rem; }
 
-    /* ── PAGE HEADER ─────────────────────────────────────── */
-    .page-header {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 0.85rem 2rem 0;
-    }
-    .page-header h1 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-    .page-header p {
-      color: var(--muted);
-      font-size: 0.82rem;
-      margin-top: 0.15rem;
-    }
-
-    /* ── MAIN GRID — ocupa exactamente el alto disponible ── */
-    main {
-      max-width: 1160px;
-      margin: 0.85rem auto 0;
-      padding: 0 2rem 0.85rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-      /* navbar 58px + page-header ~52px + margin-top ~14px + padding-bottom ~14px = 138px */
-      height: calc(100vh - 138px);
-      overflow: hidden;
-    }
-
-    /* Columnas llenan el alto y son flex-column */
-    .col {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      height: 100%;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    /* Transcripción llena el espacio restante de la columna izquierda */
-    .col-left > .card:last-child {
-      flex: 1;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-    .col-left > .card:last-child .card-body {
-      flex: 1;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-    .col-left .textarea {
-      flex: 1;
-      min-height: 60px;
-      resize: none;
-    }
-
-    /* Análisis llena el espacio disponible, su body hace scroll */
-    #card-analisis {
-      flex: 1;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-    #card-analisis .card-body {
-      flex: 1;
-      overflow-y: auto;
-      min-height: 0;
-    }
-
-    /* Puntajes: compacto, no crece */
-    #card-scores { flex-shrink: 0; }
-
-    @media (max-width: 780px) {
-      main {
-        grid-template-columns: 1fr;
-        padding: 0 1rem 0.85rem;
-        height: auto;
-        overflow: visible;
-      }
-      .col { height: auto; }
-      .col-left > .card:last-child { flex: none; }
-      .col-left .textarea { resize: vertical; }
-      #card-analisis { flex: none; }
-      .page-header { padding: 1rem 1rem 0; }
-    }
-
-    /* ── CARD ────────────────────────────────────────────── */
-    .card {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .card-header {
-      padding: 0.7rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-shrink: 0;
-    }
-    .card-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-    }
-    .card-title {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text);
-    }
+    /* ── CARD ────────────────────────────────────────── */
+    .card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+    .card-header { padding: 0.7rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .card-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .card-title { font-size: 0.88rem; font-weight: 600; }
     .card-body { padding: 1rem 1.25rem; }
 
-    /* ── BUTTONS ─────────────────────────────────────────── */
-    .btn {
-      width: 100%;
-      padding: 0.65rem 1rem;
-      border: none;
-      border-radius: 10px;
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      transition: filter 0.15s, transform 0.1s;
-    }
+    /* ── BUTTONS ─────────────────────────────────────── */
+    .btn { width: 100%; padding: 0.65rem 1rem; border: none; border-radius: 10px; font-family: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: filter 0.15s, transform 0.1s; }
     .btn:active { transform: scale(0.98); }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-
     .btn-primary { background: var(--purple); color: white; }
     .btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
-
-    .btn-danger { background: var(--red); color: white; animation: pulso 1.3s ease-in-out infinite; }
-    @keyframes pulso { 0%,100% { opacity:1 } 50% { opacity:0.75 } }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--purple);
-      border: 2px solid var(--purple);
-    }
+    .btn-green { background: var(--green); color: white; }
+    .btn-green:hover:not(:disabled) { filter: brightness(1.1); }
+    .btn-danger { background: var(--red); color: white; }
+    .btn-danger:hover:not(:disabled) { filter: brightness(1.1); }
+    .btn-outline { background: transparent; color: var(--purple); border: 2px solid var(--purple); }
     .btn-outline:hover:not(:disabled) { background: var(--purple-bg); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+    .btn-ghost:hover:not(:disabled) { border-color: var(--muted); color: var(--text); }
 
-    /* ── STATUS BAR ──────────────────────────────────────── */
-    .status {
-      margin-top: 0.75rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-align: center;
-      min-height: 1.2em;
+    /* ── INPUT / TEXTAREA / SELECT ───────────────────── */
+    .input, .select-input {
+      width: 100%; padding: 0.65rem 1rem; border: 1.5px solid var(--border);
+      border-radius: 10px; font-family: inherit; font-size: 0.92rem; color: var(--text);
+      background: var(--bg); outline: none; transition: border-color 0.2s;
     }
-    .status.ok    { color: var(--green); }
-    .status.error { color: var(--red); }
-
-    /* ── VISUALIZER ──────────────────────────────────────── */
-    #visualizer {
-      width: 100%;
-      height: 48px;
-      margin-top: 0.75rem;
-      border-radius: 10px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    #visualizer.activo { opacity: 1; }
-
-    /* ── TEXTAREA ────────────────────────────────────────── */
-    .textarea {
-      width: 100%;
-      min-height: 120px;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.92rem;
-      line-height: 1.75;
-      padding: 0.75rem 1rem;
-      resize: vertical;
-      outline: none;
-      transition: border-color 0.2s;
-    }
+    .input:focus, .select-input:focus { border-color: var(--purple); }
+    .textarea { width: 100%; min-height: 120px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; color: var(--text); font-family: inherit; font-size: 0.92rem; line-height: 1.75; padding: 0.75rem 1rem; resize: vertical; outline: none; transition: border-color 0.2s; }
     .textarea:focus { border-color: var(--purple); }
     .textarea::placeholder { color: var(--muted); }
     .hint { font-size: 0.76rem; color: var(--muted); margin-top: 0.4rem; }
 
-    /* ── METRIC CARDS (2×2) ──────────────────────────────── */
-    .metric-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-      margin-bottom: 0.9rem;
-    }
-    .mc {
-      border-radius: 12px;
-      padding: 0.65rem 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .mc.purple { background: var(--purple-bg); }
-    .mc.amber  { background: var(--amber-bg); }
-    .mc.blue   { background: var(--blue-bg); }
-    .mc.pink   { background: var(--pink-bg); }
+    /* ── STATUS ──────────────────────────────────────── */
+    .status { margin-top: 0.75rem; font-size: 0.82rem; color: var(--muted); text-align: center; min-height: 1.2em; }
+    .status.ok    { color: var(--green); }
+    .status.error { color: var(--red); }
 
-    .mc-circle {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      flex-shrink: 0;
-    }
-    .mc.purple .mc-circle { background: var(--purple); }
-    .mc.amber  .mc-circle { background: var(--amber); }
-    .mc.blue   .mc-circle { background: var(--blue); }
-    .mc.pink   .mc-circle { background: var(--pink); }
+    /* ── VISUALIZER ──────────────────────────────────── */
+    .visualizer { width: 100%; height: 48px; margin-top: 0.75rem; border-radius: 10px; opacity: 0; transition: opacity 0.3s; }
+    .visualizer.activo { opacity: 1; }
 
+    /* ── METRIC CARDS ────────────────────────────────── */
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.9rem; }
+    .mc { border-radius: 12px; padding: 0.65rem 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+    .mc.purple { background: var(--purple-bg); } .mc.amber { background: var(--amber-bg); }
+    .mc.blue   { background: var(--blue-bg); }  .mc.pink  { background: var(--pink-bg); }
+    .mc-circle { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+    .mc.purple .mc-circle { background: var(--purple); } .mc.amber .mc-circle { background: var(--amber); }
+    .mc.blue   .mc-circle { background: var(--blue); }   .mc.pink  .mc-circle { background: var(--pink); }
     .mc-info { min-width: 0; }
-    .mc-label {
-      font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 0.1rem;
-    }
-    .mc-value {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .mc-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.1rem; }
+    .mc-value { font-size: 1rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* ── RHYME SCHEME ────────────────────────────────────── */
-    .rhyme-scheme {
-      text-align: center;
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: 0.3em;
-      color: var(--purple);
-      padding: 0.4rem 0.5rem;
-      background: var(--purple-bg);
-      border-radius: 10px;
-      margin-bottom: 0.85rem;
-    }
-
-    /* ── VERSES LIST ─────────────────────────────────────── */
+    /* ── RHYME / VERSES / TAGS / OBS ────────────────── */
+    .rhyme-scheme { text-align: center; font-size: 1.6rem; font-weight: 800; letter-spacing: 0.3em; color: var(--purple); padding: 0.4rem 0.5rem; background: var(--purple-bg); border-radius: 10px; margin-bottom: 0.85rem; }
     .verses-list { list-style: none; margin-bottom: 0.85rem; }
-    .verse-item {
-      display: grid;
-      grid-template-columns: 1.4rem 1fr auto;
-      gap: 0.5rem;
-      align-items: baseline;
-      padding: 0.35rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
+    .verse-item { display: grid; grid-template-columns: 1.4rem 1fr auto; gap: 0.5rem; align-items: baseline; padding: 0.35rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
     .verse-item:last-child { border-bottom: none; }
     .verse-num { color: var(--muted); font-size: 0.75rem; }
-    .verse-text { color: var(--text); line-height: 1.5; }
-    .verse-syl {
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.15rem 0.45rem;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
+    .verse-text { line-height: 1.5; }
+    .verse-syl { font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.45rem; border-radius: 20px; white-space: nowrap; }
     .vs-ok  { background: var(--green-bg); color: #065F46; }
     .vs-mal { background: var(--red-bg);   color: #991B1B; }
     .vs-mid { background: var(--amber-bg); color: #92400E; }
-    .vs-delta {
-      font-size: 0.68rem;
-      font-weight: 700;
-      opacity: 0.85;
-      margin-left: 0.2rem;
-    }
-
-    /* ── TAGS ────────────────────────────────────────────── */
-    .tag {
-      display: inline-block;
-      background: var(--purple-bg);
-      color: var(--purple);
-      font-size: 0.76rem;
-      font-weight: 500;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      margin: 0.15rem 0.1rem;
-    }
-
-    /* ── OBSERVATIONS ────────────────────────────────────── */
+    .vs-delta { font-size: 0.68rem; font-weight: 700; opacity: 0.85; margin-left: 0.2rem; }
+    .tag { display: inline-block; background: var(--purple-bg); color: var(--purple); font-size: 0.76rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 20px; margin: 0.15rem 0.1rem; }
     .obs-list { list-style: none; }
-    .obs-list li {
-      font-size: 0.84rem;
-      padding: 0.35rem 0;
-      border-bottom: 1px solid var(--border);
-      line-height: 1.55;
-      color: var(--text);
-    }
+    .obs-list li { font-size: 0.84rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); line-height: 1.55; }
     .obs-list li:last-child { border-bottom: none; }
+    .section-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 600; margin-bottom: 0.5rem; }
 
-    /* ── SECTION LABEL ───────────────────────────────────── */
-    .section-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    /* ── SCORES ──────────────────────────────────────────── */
-    .score-hero {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-      padding: 0.25rem 0 0.75rem;
-    }
-    .score-number {
-      font-size: 2.6rem;
-      font-weight: 800;
-      color: var(--purple);
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
+    /* ── SCORES ──────────────────────────────────────── */
+    .score-hero { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.25rem 0 0.75rem; }
+    .score-number { font-size: 2.6rem; font-weight: 800; color: var(--purple); line-height: 1; letter-spacing: -0.03em; }
     .score-of { font-size: 0.8rem; color: var(--muted); }
-
     .bar-wrap { margin-bottom: 0.6rem; }
-    .bar-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.76rem;
-      color: var(--muted);
-      margin-bottom: 0.22rem;
-    }
+    .bar-labels { display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--muted); margin-bottom: 0.22rem; }
     .bar-labels span:last-child { font-weight: 600; color: var(--text); }
-    .bar-track {
-      height: 6px;
-      background: var(--bg);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: 99px;
-      width: 0;
-      transition: width 0.9s cubic-bezier(0.16,1,0.3,1);
-    }
+    .bar-track { height: 6px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; width: 0; transition: width 0.9s cubic-bezier(0.16,1,0.3,1); }
     .bar-purple { background: linear-gradient(90deg, var(--purple), var(--purple-lt)); }
     .bar-amber  { background: linear-gradient(90deg, var(--amber), #F5C060); }
     .bar-blue   { background: linear-gradient(90deg, var(--blue), #70BFED); }
-    .bar-pink   { background: linear-gradient(90deg, var(--pink), #E090C8); }
 
-    /* ── EMPTY STATE ─────────────────────────────────────── */
-    .empty {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.86rem;
-      padding: 2.25rem 0;
-    }
+    /* ── MISC ────────────────────────────────────────── */
+    .empty { text-align: center; color: var(--muted); font-size: 0.86rem; padding: 2.25rem 0; }
     .empty-icon { font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.4; }
-
-    /* ── LOADER ──────────────────────────────────────────── */
-    .loader {
-      width: 14px; height: 14px;
-      border: 2px solid rgba(255,255,255,0.4);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: inline-block;
-      vertical-align: middle;
-    }
-    .loader.dark {
-      border-color: rgba(123,111,204,0.25);
-      border-top-color: var(--purple);
-    }
+    .loader { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; }
+    .loader.dark { border-color: rgba(123,111,204,0.25); border-top-color: var(--purple); }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── CHECKBOX PLURAL ─────────────────────────────────── */
-    .check-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.65rem;
-      cursor: pointer;
-      user-select: none;
-    }
-    .check-row input[type="checkbox"] {
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      border: 2px solid var(--border);
-      border-radius: 4px;
-      cursor: pointer;
-      flex-shrink: 0;
-      position: relative;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .check-row input[type="checkbox"]:checked {
-      background: var(--purple);
-      border-color: var(--purple);
-    }
-    .check-row input[type="checkbox"]:checked::after {
-      content: '';
-      position: absolute;
-      left: 3px; top: 0px;
-      width: 5px; height: 9px;
-      border: 2px solid white;
-      border-left: none; border-top: none;
-      transform: rotate(45deg);
-    }
-    .check-row span {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
+    .check-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.65rem; cursor: pointer; user-select: none; }
+    .check-row input[type="checkbox"] { appearance: none; width: 16px; height: 16px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; position: relative; transition: background 0.15s, border-color 0.15s; }
+    .check-row input[type="checkbox"]:checked { background: var(--purple); border-color: var(--purple); }
+    .check-row input[type="checkbox"]:checked::after { content: ''; position: absolute; left: 3px; top: 0; width: 5px; height: 9px; border: 2px solid white; border-left: none; border-top: none; transform: rotate(45deg); }
+    .check-row span { font-size: 0.78rem; color: var(--muted); }
     .check-row:hover span { color: var(--text); }
-    .plural-badge {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 600;
-      background: var(--purple-bg);
-      color: var(--purple);
-      padding: 0.1rem 0.4rem;
-      border-radius: 20px;
-      margin-left: 0.4rem;
-      vertical-align: middle;
-    }
-
+    .plural-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; background: var(--purple-bg); color: var(--purple); padding: 0.1rem 0.4rem; border-radius: 20px; margin-left: 0.4rem; vertical-align: middle; }
     .hidden { display: none !important; }
+
+    /* ════════════════════════════════════════════════
+       HOME
+       ════════════════════════════════════════════════ */
+    #view-home { max-width: 700px; margin: 4rem auto; padding: 0 2rem; }
+    .home-hero { text-align: center; margin-bottom: 3rem; }
+    .home-hero h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .home-hero p { color: var(--muted); font-size: 0.95rem; }
+    .mode-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .mode-card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); padding: 2rem 1.5rem; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s; text-align: center; }
+    .mode-card:hover { border-color: var(--purple); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(123,111,204,0.18); }
+    .mode-card.amber-mode:hover { border-color: var(--amber); box-shadow: 0 8px 30px rgba(232,160,32,0.18); }
+    .mode-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .mode-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .mode-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+
+    /* ════════════════════════════════════════════════
+       INDIVIDUAL
+       ════════════════════════════════════════════════ */
+    #view-individual { max-width: 1160px; margin: 0.85rem auto 0; padding: 0 2rem 0.85rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; height: calc(100vh - 138px); overflow: hidden; }
+    .col { display: flex; flex-direction: column; gap: 1.25rem; height: 100%; overflow: hidden; min-height: 0; }
+    .col-left > .card:last-child { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+    .col-left > .card:last-child .card-body { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+    .col-left .textarea { flex: 1; min-height: 60px; resize: none; }
+    #card-analisis { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+    #card-analisis .card-body { flex: 1; overflow-y: auto; min-height: 0; }
+    #card-scores { flex-shrink: 0; }
+
+    /* ════════════════════════════════════════════════
+       COMP SETUP
+       ════════════════════════════════════════════════ */
+    #view-comp-setup { max-width: 540px; margin: 3rem auto; padding: 0 2rem; }
+    .setup-card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); padding: 2rem; }
+    .setup-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .setup-card > p { color: var(--muted); font-size: 0.82rem; margin-bottom: 1.5rem; }
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 0.4rem; }
+    .t1-accent { border-left: 4px solid var(--purple); padding-left: 0.75rem; }
+    .t2-accent { border-left: 4px solid var(--amber); padding-left: 0.75rem; }
+    .setup-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+
+    /* ════════════════════════════════════════════════
+       COMP AUTO
+       ════════════════════════════════════════════════ */
+    #view-comp-auto { max-width: 960px; margin: 1.25rem auto; padding: 0 2rem 2rem; display: grid; grid-template-columns: 1fr 360px; gap: 1.25rem; align-items: start; }
+
+    .auto-main { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    /* Panel de escucha */
+    .auto-panel { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+    .auto-panel-header { padding: 1.1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); transition: background 0.4s; }
+    .auto-panel-header.t1 { background: var(--purple-bg); }
+    .auto-panel-header.t2 { background: var(--amber-bg); }
+    .auto-panel-header.idle { background: var(--bg); }
+    .auto-turno-info h2 { font-size: 1.15rem; font-weight: 800; transition: color 0.4s; }
+    .auto-panel-header.t1 .auto-turno-info h2 { color: var(--purple); }
+    .auto-panel-header.t2 .auto-turno-info h2 { color: var(--amber); }
+    .auto-panel-header.idle .auto-turno-info h2 { color: var(--muted); }
+    .auto-turno-info p { font-size: 0.78rem; color: var(--muted); margin-top: 0.12rem; }
+    .auto-dots { display: flex; gap: 0.4rem; flex-wrap: wrap; max-width: 160px; justify-content: flex-end; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: background 0.3s, box-shadow 0.3s; }
+    .dot.done-t1 { background: var(--purple); }
+    .dot.done-t2 { background: var(--amber); }
+    .dot.cur-t1 { background: var(--purple); box-shadow: 0 0 0 3px rgba(123,111,204,0.25); }
+    .dot.cur-t2 { background: var(--amber);  box-shadow: 0 0 0 3px rgba(232,160,32,0.25); }
+
+    .auto-panel-body { padding: 1.25rem 1.5rem; }
+    #auto-canvas { width: 100%; height: 56px; border-radius: 10px; background: var(--bg); display: block; margin-bottom: 1rem; }
+
+    .audio-state-row { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.9rem; }
+    .audio-indicator { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; transition: background 0.2s; }
+    .audio-indicator.grabando  { background: var(--red);    animation: pulso-dot 1s infinite; }
+    .audio-indicator.silencio  { background: var(--amber); }
+    .audio-indicator.procesando{ background: var(--blue); }
+    .audio-indicator.idle      { background: var(--border); }
+    @keyframes pulso-dot { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    #auto-estado-texto { font-size: 0.85rem; font-weight: 500; flex: 1; }
+
+    .silencio-bar-wrap { margin-bottom: 1rem; }
+    .silencio-bar-label { font-size: 0.72rem; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 0.28rem; }
+    .silencio-bar-track { height: 5px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+    .silencio-bar-fill { height: 100%; border-radius: 99px; width: 0; background: linear-gradient(90deg, var(--amber), var(--amber-lt)); transition: width 0.15s linear; }
+
+    /* Botón principal: cambio de turno */
+    .auto-controls { display: flex; flex-direction: column; gap: 0.6rem; }
+    .auto-btn-next { font-size: 1rem; padding: 0.8rem 1rem; border-radius: 12px; }
+    .auto-btn-secondary { display: flex; gap: 0.6rem; }
+    .auto-btn-secondary .btn { font-size: 0.82rem; padding: 0.55rem 0.9rem; }
+
+    /* Log lateral */
+    .auto-log { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; position: sticky; top: 74px; }
+    .auto-log-header { padding: 0.75rem 1.1rem; border-bottom: 1px solid var(--border); font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+    .auto-log-list { list-style: none; max-height: calc(100vh - 200px); overflow-y: auto; }
+    .log-item { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.65rem 1.1rem; border-bottom: 1px solid var(--border); }
+    .log-item:last-child { border-bottom: none; }
+    .log-badge { flex-shrink: 0; font-size: 0.65rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 20px; white-space: nowrap; margin-top: 0.05rem; }
+    .log-badge.t1   { background: var(--purple-bg); color: var(--purple); }
+    .log-badge.t2   { background: var(--amber-bg);  color: #92400E; }
+    .log-badge.proc { background: var(--blue-bg);   color: var(--blue); }
+    .log-badge.err  { background: var(--red-bg);    color: var(--red); }
+    .log-info { flex: 1; min-width: 0; }
+    .log-meta { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.12rem; }
+    .log-texto { font-size: 0.79rem; line-height: 1.45; white-space: pre-line; }
+    .log-icon { font-size: 0.95rem; flex-shrink: 0; margin-top: 0.02rem; }
+    .log-empty { padding: 1.5rem 1.1rem; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+    /* ════════════════════════════════════════════════
+       COMP RESULTADOS
+       ════════════════════════════════════════════════ */
+    #view-comp-resultados { max-width: 1160px; margin: 1rem auto; padding: 0 2rem 2rem; }
+    .resultados-header { text-align: center; margin-bottom: 2rem; }
+    .resultados-header h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; }
+    .resultados-header p { color: var(--muted); font-size: 0.88rem; margin-top: 0.3rem; }
+    .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .res-col { display: flex; flex-direction: column; gap: 0.75rem; }
+    .res-header { border-radius: 14px; padding: 1rem 1.25rem; color: white; display: flex; align-items: center; justify-content: space-between; }
+    .res-header.t1 { background: linear-gradient(135deg, var(--purple), var(--purple-lt)); }
+    .res-header.t2 { background: linear-gradient(135deg, var(--amber), #F5C060); }
+    .res-name { font-size: 1.1rem; font-weight: 700; }
+    .res-total { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .res-total-of { font-size: 0.72rem; opacity: 0.75; }
+
+    .trova-result-card {
+      background: var(--white); border-radius: 12px; box-shadow: var(--shadow);
+      padding: 0.9rem 1.1rem; border-left: 3px solid var(--border);
+      cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .trova-result-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
+    .trova-result-card.t1 { border-left-color: var(--purple); }
+    .trova-result-card.t2 { border-left-color: var(--amber); }
+    .trc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; }
+    .trc-num { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .trc-hint { font-size: 0.68rem; color: var(--muted); }
+    .trc-score { font-size: 1.1rem; font-weight: 800; }
+    .trc-score.t1 { color: var(--purple); }
+    .trc-score.t2 { color: var(--amber); }
+    .trc-texto { font-size: 0.78rem; color: var(--muted); line-height: 1.5; white-space: pre-line; }
+    .trc-bars { margin-top: 0.6rem; }
+    .trc-bar-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .trc-bar-label { font-size: 0.68rem; color: var(--muted); width: 50px; flex-shrink: 0; }
+    .trc-bar-track { flex: 1; height: 4px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+    .trc-bar-fill { height: 100%; border-radius: 99px; transition: width 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .trc-bar-val { font-size: 0.68rem; font-weight: 600; width: 25px; text-align: right; flex-shrink: 0; }
+
+    .winner-banner { background: linear-gradient(135deg, #1E2B4A, #263558); color: white; border-radius: 16px; padding: 1.5rem 2rem; text-align: center; }
+    .winner-banner h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .winner-banner p { opacity: 0.65; font-size: 0.85rem; }
+    .winner-diff { display: inline-block; background: rgba(255,255,255,0.12); border-radius: 8px; padding: 0.2rem 0.75rem; font-size: 0.82rem; font-weight: 600; margin-top: 0.5rem; }
+
+    /* ════════════════════════════════════════════════
+       MODAL DETALLE DE TROVA
+       ════════════════════════════════════════════════ */
+    #modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(30,43,74,0.55);
+      backdrop-filter: blur(3px);
+    }
+    .modal-card {
+      position: relative; background: white; border-radius: 20px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+      width: 100%; max-width: 680px; max-height: 88vh;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .modal-header {
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .modal-header-left { display: flex; align-items: center; gap: 0.65rem; }
+    .modal-header h3 { font-size: 1rem; font-weight: 700; }
+    .modal-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 20px; }
+    .modal-badge.t1 { background: var(--purple-bg); color: var(--purple); }
+    .modal-badge.t2 { background: var(--amber-bg); color: #92400E; }
+    .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted); padding: 0 0.2rem; line-height: 1; }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { flex: 1; overflow-y: auto; padding: 1.25rem 1.5rem; }
+    .modal-section { margin-bottom: 1.5rem; }
+    .modal-section:last-child { margin-bottom: 0; }
+    .modal-divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+    @media (max-width: 780px) {
+      #view-individual { grid-template-columns: 1fr; padding: 0 1rem 0.85rem; height: auto; overflow: visible; }
+      .col { height: auto; }
+      .col-left > .card:last-child { flex: none; }
+      .col-left .textarea { resize: vertical; }
+      #card-analisis { flex: none; }
+      .mode-cards { grid-template-columns: 1fr; }
+      .res-grid { grid-template-columns: 1fr; }
+      #view-comp-auto { grid-template-columns: 1fr; }
+      .auto-log { position: static; }
+    }
   </style>
 </head>
 <body>
 
 <!-- ── NAVBAR ───────────────────────────────────────────── -->
 <nav class="navbar">
-  <div class="brand">
-    🎵 Trova<span class="brand-badge">Coach</span>
-  </div>
-  <span class="nav-sub">Jurado Virtual · Trova Colombiana</span>
+  <div class="brand">🎵 Trova<span class="brand-badge">Coach</span></div>
+  <button class="nav-back hidden" id="nav-back">← Inicio</button>
+  <span class="nav-sub" id="nav-sub">Jurado Virtual · Trova Colombiana</span>
 </nav>
 
-<!-- ── PAGE HEADER ──────────────────────────────────────── -->
-<div class="page-header">
-  <h1>Analiza tu Trova</h1>
-  <p>Graba o escribe tu trova para obtener análisis técnico de rima, métrica y estructura</p>
+<!-- ════════════════════════════════════════════════════════
+     HOME
+     ════════════════════════════════════════════════════════ -->
+<div id="view-home">
+  <div class="home-hero">
+    <h2>¿Cómo quieres usar Trova Coach?</h2>
+    <p>Elige el modo de análisis que necesitas</p>
+  </div>
+  <div class="mode-cards">
+    <div class="mode-card" id="btn-modo-individual">
+      <div class="mode-icon">🎵</div>
+      <h3>Modo Individual</h3>
+      <p>Analiza una trova: rima, métrica, estructura y puntaje técnico.</p>
+    </div>
+    <div class="mode-card amber-mode" id="btn-modo-competencia">
+      <div class="mode-icon">⚔️</div>
+      <h3>Modo Competencia</h3>
+      <p>Dos trovadores se enfrentan. El sistema detecta cada trova por las pausas y tú cambias el turno manualmente cuando quieras.</p>
+    </div>
+  </div>
 </div>
 
-<!-- ── MAIN ─────────────────────────────────────────────── -->
-<main>
-
-  <!-- COLUMNA IZQUIERDA -->
+<!-- ════════════════════════════════════════════════════════
+     INDIVIDUAL
+     ════════════════════════════════════════════════════════ -->
+<div class="page-header hidden" id="ind-header">
+  <h1>Analiza tu Trova</h1>
+  <p>Graba o escribe tu trova para análisis técnico de rima, métrica y estructura</p>
+</div>
+<div id="view-individual" class="hidden">
   <div class="col col-left">
-
-    <!-- Grabación -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon" style="background:var(--purple-bg)">🎙️</div>
         <span class="card-title">Grabación</span>
       </div>
       <div class="card-body">
-        <button class="btn btn-primary" id="btn-grabar">
-          <span id="grabar-icono">🎤</span>
-          <span id="grabar-texto">Iniciar grabación</span>
+        <button class="btn btn-primary" id="ind-btn-grabar">
+          <span id="ind-grabar-icono">🎤</span>
+          <span id="ind-grabar-texto">Iniciar grabación</span>
         </button>
-        <canvas id="visualizer"></canvas>
-        <div class="status" id="status">Listo para grabar</div>
+        <canvas class="visualizer" id="ind-visualizer"></canvas>
+        <div class="status" id="ind-status">Listo para grabar</div>
       </div>
     </div>
-
-    <!-- Transcripción -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon" style="background:var(--amber-bg)">📝</div>
         <span class="card-title">Transcripción</span>
       </div>
       <div class="card-body">
-        <textarea
-          class="textarea"
-          id="transcripcion"
-          rows="6"
-          placeholder="La transcripción aparecerá aquí...&#10;&#10;También puedes escribir o pegar la trova directamente."
-        ></textarea>
+        <textarea class="textarea" id="ind-transcripcion" rows="6"
+          placeholder="La transcripción aparecerá aquí...&#10;&#10;También puedes escribir o pegar la trova directamente."></textarea>
         <p class="hint">* Corrige cualquier error antes de analizar.</p>
         <label class="check-row">
-          <input type="checkbox" id="rima-plural" />
+          <input type="checkbox" id="ind-rima-plural" />
           <span>Aceptar rima plural/singular <em>(montañas ↔ amaña)</em></span>
         </label>
-        <button class="btn btn-outline" id="btn-analizar" style="margin-top:0.65rem" disabled>
-          Analizar trova
-        </button>
+        <button class="btn btn-outline" id="ind-btn-analizar" style="margin-top:0.65rem" disabled>Analizar trova</button>
       </div>
     </div>
-
   </div>
-
-  <!-- COLUMNA DERECHA -->
   <div class="col">
-
-    <!-- Análisis técnico -->
     <div class="card" id="card-analisis">
       <div class="card-header">
         <div class="card-icon" style="background:var(--blue-bg)">📐</div>
         <span class="card-title">Análisis técnico</span>
       </div>
       <div class="card-body" id="analisis-body">
-        <div class="empty">
-          <div class="empty-icon">🎼</div>
-          El análisis aparecerá aquí tras ingresar la trova.
-        </div>
+        <div class="empty"><div class="empty-icon">🎼</div>El análisis aparecerá aquí tras ingresar la trova.</div>
       </div>
     </div>
-
-    <!-- Puntajes -->
     <div class="card" id="card-scores">
       <div class="card-header">
         <div class="card-icon" style="background:var(--pink-bg)">🏆</div>
@@ -612,287 +433,889 @@
         <div class="empty" style="padding:0.75rem 0">—</div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     COMP SETUP
+     ════════════════════════════════════════════════════════ -->
+<div id="view-comp-setup" class="hidden">
+  <div class="setup-card">
+    <h2>⚔️ Nueva Competencia</h2>
+    <p>Configura la competencia. El sistema detecta las trovas por pausas y puedes cambiar de turno manualmente.</p>
+
+    <div class="setup-row">
+      <div class="field t1-accent">
+        <label>Trovador 1 (canta primero)</label>
+        <input class="input" id="nombre-t1" placeholder="Nombre" />
+      </div>
+      <div class="field t2-accent">
+        <label>Trovador 2</label>
+        <input class="input" id="nombre-t2" placeholder="Nombre" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Trovas por trovador</label>
+      <select class="select-input" id="num-trovas-select">
+        <option value="1">1 trova por trovador</option>
+        <option value="2">2 trovas por trovador</option>
+        <option value="3">3 trovas por trovador</option>
+        <option value="4">4 trovas por trovador</option>
+        <option value="5" selected>5 trovas por trovador (estándar)</option>
+        <option value="6">6 trovas por trovador</option>
+        <option value="7">7 trovas por trovador</option>
+        <option value="8">8 trovas por trovador</option>
+        <option value="9">9 trovas por trovador</option>
+        <option value="10">10 trovas por trovador</option>
+      </select>
+    </div>
+
+    <label class="check-row" style="margin-bottom:1.25rem">
+      <input type="checkbox" id="comp-rima-plural" />
+      <span>Aceptar rima plural/singular en toda la competencia</span>
+    </label>
+
+    <button class="btn btn-primary" id="btn-iniciar-comp">🎤 Iniciar competencia</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     COMP AUTO
+     ════════════════════════════════════════════════════════ -->
+<div id="view-comp-auto" class="hidden">
+
+  <!-- Columna principal -->
+  <div class="auto-main">
+
+    <div class="auto-panel">
+      <div class="auto-panel-header idle" id="auto-panel-header">
+        <div class="auto-turno-info">
+          <h2 id="auto-turno-titulo">Preparando micrófono…</h2>
+          <p id="auto-turno-sub">La grabación iniciará en un momento</p>
+        </div>
+        <div class="auto-dots" id="auto-dots"></div>
+      </div>
+
+      <div class="auto-panel-body">
+        <canvas id="auto-canvas"></canvas>
+
+        <div class="audio-state-row">
+          <div class="audio-indicator idle" id="auto-indicator"></div>
+          <span id="auto-estado-texto">Iniciando micrófono…</span>
+        </div>
+
+        <div class="silencio-bar-wrap">
+          <div class="silencio-bar-label">
+            <span>Silencio detectado — corte automático</span>
+            <span id="auto-silencio-seg">—</span>
+          </div>
+          <div class="silencio-bar-track">
+            <div class="silencio-bar-fill" id="auto-silencio-bar"></div>
+          </div>
+        </div>
+
+        <!-- Botón principal: cambio manual de turno -->
+        <div class="auto-controls">
+          <button class="btn btn-green auto-btn-next" id="auto-btn-siguiente" disabled>
+            ⏭ Siguiente trovador
+          </button>
+          <div class="auto-btn-secondary">
+            <button class="btn btn-ghost" id="auto-btn-detener">⏹ Finalizar competencia</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
-</main>
+  <!-- Log lateral de trovas -->
+  <div class="auto-log">
+    <div class="auto-log-header">Trovas registradas</div>
+    <ul class="auto-log-list" id="auto-log-list">
+      <li class="log-empty">Las trovas aparecerán aquí a medida que se detecten.</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     COMP RESULTADOS
+     ════════════════════════════════════════════════════════ -->
+<div id="view-comp-resultados" class="hidden">
+  <div class="resultados-header">
+    <h2>Resultados Finales</h2>
+    <p id="res-subtitulo">Competencia de trova · Tema libre</p>
+  </div>
+  <div class="res-grid">
+    <div class="res-col" id="res-col-t1"></div>
+    <div class="res-col" id="res-col-t2"></div>
+  </div>
+  <div class="winner-banner" id="winner-banner"></div>
+  <div style="text-align:center">
+    <button class="btn btn-primary" style="width:auto;padding:0.65rem 2rem;margin:1.5rem auto 0;display:flex" id="btn-nueva-comp">
+      Nueva competencia
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     MODAL — Detalle de trova
+     ════════════════════════════════════════════════════════ -->
+<div id="modal-overlay" class="hidden">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <span class="modal-badge t1" id="modal-badge">T1</span>
+        <h3 id="modal-titulo">Trova 1</h3>
+      </div>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Transcripción editable -->
+      <div class="modal-section">
+        <p class="section-label">Transcripción — edita y recalifica si hay errores</p>
+        <textarea class="textarea" id="modal-textarea" rows="5"
+          placeholder="Transcripción de la trova…"></textarea>
+        <button class="btn btn-primary" id="modal-btn-recalificar" style="margin-top:0.65rem">
+          Recalificar con esta transcripción
+        </button>
+        <div class="status" id="modal-status"></div>
+      </div>
+
+      <hr class="modal-divider" />
+
+      <!-- Análisis detallado -->
+      <div class="modal-section">
+        <p class="section-label">Análisis técnico</p>
+        <div id="modal-analisis-body"></div>
+      </div>
+
+      <!-- Puntaje -->
+      <div id="modal-puntajes-body"></div>
+
+    </div>
+  </div>
+</div>
 
 <script>
 const API = '';
 
-// ── Estado ────────────────────────────────────────────────
-let mediaRecorder = null;
-let audioChunks   = [];
-let grabando      = false;
-let audioCtx      = null;
-let analyserNode  = null;
-let animFrameId   = null;
+// ══════════════════════════════════════════════════════════
+// Navegación
+// ══════════════════════════════════════════════════════════
+const VIEWS = ['view-home','view-individual','view-comp-setup','view-comp-auto','view-comp-resultados'];
 
-// ── Elementos ─────────────────────────────────────────────
-const btnGrabar    = document.getElementById('btn-grabar');
-const grabarIcono  = document.getElementById('grabar-icono');
-const grabarTexto  = document.getElementById('grabar-texto');
-const statusEl     = document.getElementById('status');
-const transcEl     = document.getElementById('transcripcion');
-const btnAnalizar  = document.getElementById('btn-analizar');
-const analisisBody = document.getElementById('analisis-body');
-const puntajesBody = document.getElementById('puntajes-body');
-const canvasViz    = document.getElementById('visualizer');
-const ctxCanvas    = canvasViz.getContext('2d');
+function showView(id) {
+  VIEWS.forEach(v => document.getElementById(v).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  const home = id === 'view-home';
+  document.getElementById('nav-back').classList.toggle('hidden', home);
+  document.getElementById('nav-sub').classList.toggle('hidden', !home);
+  document.getElementById('ind-header').classList.toggle('hidden', id !== 'view-individual');
+}
 
-// ── Grabación ─────────────────────────────────────────────
-btnGrabar.addEventListener('click', () => grabando ? detenerGrabacion() : iniciarGrabacion());
+document.getElementById('nav-back').addEventListener('click', () => {
+  detenerAutoCompetencia(true);
+  detenerGrabacionInd(true);
+  showView('view-home');
+});
+document.getElementById('btn-modo-individual').addEventListener('click', () => showView('view-individual'));
+document.getElementById('btn-modo-competencia').addEventListener('click', () => showView('view-comp-setup'));
 
-async function iniciarGrabacion() {
+// ══════════════════════════════════════════════════════════
+// MODO INDIVIDUAL
+// ══════════════════════════════════════════════════════════
+let indRecorder = null, indChunks = [], indGrabando = false;
+let indAudioCtx = null, indAnimId = null;
+
+const indBtnGrabar   = document.getElementById('ind-btn-grabar');
+const indGrabarIcono = document.getElementById('ind-grabar-icono');
+const indGrabarTexto = document.getElementById('ind-grabar-texto');
+const indStatusEl    = document.getElementById('ind-status');
+const indTranscEl    = document.getElementById('ind-transcripcion');
+const indBtnAnalizar = document.getElementById('ind-btn-analizar');
+const indCanvas      = document.getElementById('ind-visualizer');
+
+indBtnGrabar.addEventListener('click', () => indGrabando ? detenerGrabacionInd() : iniciarGrabacionInd());
+indTranscEl.addEventListener('input', () => { indBtnAnalizar.disabled = !indTranscEl.value.trim(); });
+
+async function iniciarGrabacionInd() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-    audioChunks = [];
-    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-    mediaRecorder.onstop = procesarAudio;
-    mediaRecorder.start();
-    grabando = true;
-    btnGrabar.className = 'btn btn-danger';
-    grabarIcono.textContent = '⏹';
-    grabarTexto.textContent = 'Detener grabación';
-    setStatus('Grabando...', '');
-    iniciarVisualizador(stream);
+    indRecorder = new MediaRecorder(stream, { mimeType: getSupportedMimeType() });
+    indChunks = [];
+    indRecorder.ondataavailable = e => indChunks.push(e.data);
+    indRecorder.onstop = procesarAudioInd;
+    indRecorder.start();
+    indGrabando = true;
+    indBtnGrabar.className = 'btn btn-danger';
+    indGrabarIcono.textContent = '⏹';
+    indGrabarTexto.textContent = 'Detener grabación';
+    setStatus(indStatusEl, 'Grabando…', '');
+    const { ctx, animId } = startViz(stream, indCanvas, 'purple');
+    indAudioCtx = ctx; indAnimId = animId;
   } catch (err) {
-    setStatus('Error de micrófono: ' + err.message, 'error');
+    setStatus(indStatusEl, 'Error de micrófono: ' + err.message, 'error');
   }
 }
 
-function detenerGrabacion() {
-  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-    mediaRecorder.stop();
-    mediaRecorder.stream.getTracks().forEach(t => t.stop());
+function detenerGrabacionInd(silencioso = false) {
+  if (indRecorder && indRecorder.state !== 'inactive') {
+    indRecorder.stop();
+    indRecorder.stream.getTracks().forEach(t => t.stop());
   }
-  grabando = false;
-  btnGrabar.className = 'btn btn-primary';
-  grabarIcono.textContent = '🎤';
-  grabarTexto.textContent = 'Iniciar grabación';
-  detenerVisualizador();
-  setStatus('Transcribiendo...', '');
+  indGrabando = false;
+  indBtnGrabar.className = 'btn btn-primary';
+  indGrabarIcono.textContent = '🎤';
+  indGrabarTexto.textContent = 'Iniciar grabación';
+  stopViz(indCanvas, indAudioCtx, indAnimId);
+  indAudioCtx = null; indAnimId = null;
+  if (!silencioso) setStatus(indStatusEl, 'Transcribiendo…', '');
 }
 
-async function procesarAudio() {
-  const blob = new Blob(audioChunks, { type: 'audio/webm' });
+async function procesarAudioInd() {
+  const blob = new Blob(indChunks, { type: getSupportedMimeType() });
   const form = new FormData();
   form.append('audio', blob, 'trova.webm');
   try {
     const res = await fetch(`${API}/transcribir`, { method: 'POST', body: form });
     if (!res.ok) throw new Error((await res.json()).detail);
     const data = await res.json();
-    transcEl.value = data.transcripcion;
-    btnAnalizar.disabled = false;
-    setStatus('✓ Transcripción lista. Corrige si es necesario.', 'ok');
+    indTranscEl.value = data.transcripcion;
+    indBtnAnalizar.disabled = false;
+    setStatus(indStatusEl, '✓ Transcripción lista. Corrige si es necesario.', 'ok');
   } catch (err) {
-    setStatus('Error al transcribir: ' + err.message, 'error');
+    setStatus(indStatusEl, 'Error al transcribir: ' + err.message, 'error');
   }
 }
 
-transcEl.addEventListener('input', () => {
-  btnAnalizar.disabled = !transcEl.value.trim();
-});
-
-// ── Visualizador ──────────────────────────────────────────
-function iniciarVisualizador(stream) {
-  canvasViz.classList.add('activo');
-  canvasViz.width  = canvasViz.offsetWidth;
-  canvasViz.height = 48;
-  audioCtx     = new AudioContext();
-  const src    = audioCtx.createMediaStreamSource(stream);
-  analyserNode = audioCtx.createAnalyser();
-  analyserNode.fftSize = 128;
-  src.connect(analyserNode);
-  dibujarOndas();
-}
-
-function detenerVisualizador() {
-  cancelAnimationFrame(animFrameId);
-  if (audioCtx) { audioCtx.close(); audioCtx = null; }
-  canvasViz.classList.remove('activo');
-  ctxCanvas.clearRect(0, 0, canvasViz.width, canvasViz.height);
-}
-
-function dibujarOndas() {
-  animFrameId = requestAnimationFrame(dibujarOndas);
-  const buf = new Uint8Array(analyserNode.frequencyBinCount);
-  analyserNode.getByteFrequencyData(buf);
-  const W = canvasViz.width, H = canvasViz.height;
-  ctxCanvas.clearRect(0, 0, W, H);
-  const barW = (W / buf.length) * 2;
-  let x = 0;
-  buf.forEach(v => {
-    const h = (v / 255) * H;
-    const alpha = 0.4 + (v / 255) * 0.6;
-    ctxCanvas.fillStyle = `rgba(123,111,204,${alpha})`;
-    ctxCanvas.beginPath();
-    ctxCanvas.roundRect(x, H - h, Math.max(barW - 2, 1), h, 2);
-    ctxCanvas.fill();
-    x += barW + 1;
-  });
-}
-
-// ── Análisis ──────────────────────────────────────────────
-btnAnalizar.addEventListener('click', analizarTrova);
-
-async function analizarTrova() {
-  const texto = transcEl.value.trim();
+indBtnAnalizar.addEventListener('click', async () => {
+  const texto = indTranscEl.value.trim();
   if (!texto) return;
-
-  btnAnalizar.disabled = true;
-  btnAnalizar.innerHTML = '<span class="loader dark"></span> Analizando...';
-  setStatus('Analizando trova...', '');
-
+  indBtnAnalizar.disabled = true;
+  indBtnAnalizar.innerHTML = '<span class="loader dark"></span> Analizando…';
   try {
-    const rimaPlural = document.getElementById('rima-plural').checked;
+    const rimaPlural = document.getElementById('ind-rima-plural').checked;
     const res = await fetch(`${API}/analizar`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ texto, rima_plural: rimaPlural }),
     });
     if (!res.ok) throw new Error((await res.json()).detail);
     const data = await res.json();
-    renderAnalisis(data, rimaPlural);
-    renderPuntajes(data.puntuacion);
-    // Reformatear la transcripción con un verso por línea
-    if (data.versos && data.versos.length > 1) {
-      transcEl.value = data.versos.map(v => v.texto).join('\n');
-    }
-    setStatus('✓ Análisis completo', 'ok');
+    document.getElementById('analisis-body').innerHTML = buildAnalisisHTML(data, rimaPlural);
+    document.getElementById('puntajes-body').innerHTML = buildPuntajesHTML(data.puntuacion);
+    animateBars(document.getElementById('puntajes-body'));
+    if (data.versos && data.versos.length > 1) indTranscEl.value = data.versos.map(v => v.texto).join('\n');
+    setStatus(indStatusEl, '✓ Análisis completo', 'ok');
   } catch (err) {
-    setStatus('Error en análisis: ' + err.message, 'error');
+    setStatus(indStatusEl, 'Error: ' + err.message, 'error');
   } finally {
-    btnAnalizar.disabled = false;
-    btnAnalizar.textContent = 'Analizar trova';
+    indBtnAnalizar.disabled = false;
+    indBtnAnalizar.textContent = 'Analizar trova';
+  }
+});
+
+// ══════════════════════════════════════════════════════════
+// Visualizador
+// ══════════════════════════════════════════════════════════
+function getSupportedMimeType() {
+  const types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
+  for (const t of types) if (MediaRecorder.isTypeSupported(t)) return t;
+  return '';
+}
+
+function startViz(stream, canvas, colorKey = 'purple') {
+  canvas.classList.add('activo');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 48;
+  const ctx = new AudioContext();
+  const src = ctx.createMediaStreamSource(stream);
+  const analyser = ctx.createAnalyser();
+  analyser.fftSize = 128;
+  src.connect(analyser);
+  const rgb = colorKey === 'amber' ? '232,160,32' : '123,111,204';
+  let animId;
+  function draw() {
+    animId = requestAnimationFrame(draw);
+    const buf = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(buf);
+    const c2 = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    c2.clearRect(0, 0, W, H);
+    const barW = (W / buf.length) * 2;
+    let x = 0;
+    buf.forEach(v => {
+      const h = (v / 255) * H;
+      c2.fillStyle = `rgba(${rgb},${0.4 + (v / 255) * 0.6})`;
+      c2.beginPath();
+      c2.roundRect(x, H - h, Math.max(barW - 2, 1), h, 2);
+      c2.fill();
+      x += barW + 1;
+    });
+  }
+  draw();
+  return { ctx, animId };
+}
+
+function stopViz(canvas, audioCtx, animId) {
+  if (animId) cancelAnimationFrame(animId);
+  if (audioCtx) audioCtx.close();
+  if (canvas) {
+    canvas.classList.remove('activo');
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
   }
 }
 
-function renderAnalisis(d, rimaPlural = false) {
-  const RIMA_COLOR = {
-    consonante: '#065F46', asonante: '#92400E',
-    mixta: '#92400E', libre: '#991B1B', 'sin rima': '#991B1B',
-  };
+// ══════════════════════════════════════════════════════════
+// COMP SETUP
+// ══════════════════════════════════════════════════════════
+const comp = { t1: { nombre: '', trovas: [] }, t2: { nombre: '', trovas: [] }, turno: 0, numTrovas: 5, rimaPlural: false };
 
+document.getElementById('btn-iniciar-comp').addEventListener('click', () => {
+  const n1 = document.getElementById('nombre-t1').value.trim();
+  const n2 = document.getElementById('nombre-t2').value.trim();
+  if (!n1 || !n2) { alert('Por favor ingresa el nombre de ambos trovadores.'); return; }
+  comp.t1 = { nombre: n1, trovas: [] };
+  comp.t2 = { nombre: n2, trovas: [] };
+  comp.turno = 0;
+  comp.numTrovas = parseInt(document.getElementById('num-trovas-select').value, 10);
+  comp.rimaPlural = document.getElementById('comp-rima-plural').checked;
+  showView('view-comp-auto');
+  iniciarAutoCompetencia();
+});
+
+// ══════════════════════════════════════════════════════════
+// COMP AUTO
+// ══════════════════════════════════════════════════════════
+const SILENCE_THRESHOLD  = 22;    // RMS 0-255
+const SILENCE_DURATION   = 2800;  // ms de silencio para corte automático
+const MIN_TROVA_DURATION = 2000;  // ms mínimos de grabación antes de cortar
+const MIN_BLOB_SIZE      = 3000;  // bytes mínimos
+
+let autoStream    = null;
+let autoRecorder  = null;
+let autoChunks    = [];
+let autoRunning   = false;
+let autoProcessing = false;
+let autoAudioCtx  = null;
+let autoAnalyser  = null;
+let autoAnimId    = null;
+let autoTrovaStart = null;
+let silenceStart  = null;
+
+const autoPanelHeader  = document.getElementById('auto-panel-header');
+const autoTurnoTitulo  = document.getElementById('auto-turno-titulo');
+const autoTurnoSub     = document.getElementById('auto-turno-sub');
+const autoDotsEl       = document.getElementById('auto-dots');
+const autoCanvas       = document.getElementById('auto-canvas');
+const autoIndicator    = document.getElementById('auto-indicator');
+const autoEstadoTexto  = document.getElementById('auto-estado-texto');
+const autoSilencioBar  = document.getElementById('auto-silencio-bar');
+const autoSilencioSeg  = document.getElementById('auto-silencio-seg');
+const autoBtnSiguiente = document.getElementById('auto-btn-siguiente');
+const autoBtnDetener   = document.getElementById('auto-btn-detener');
+const autoLogList      = document.getElementById('auto-log-list');
+
+autoBtnSiguiente.addEventListener('click', () => {
+  if (autoProcessing || !autoRunning) return;
+  silenceStart = null;
+  autoSilencioBar.style.width = '0%';
+  if (autoRecorder && autoRecorder.state === 'recording') autoRecorder.stop();
+});
+
+autoBtnDetener.addEventListener('click', () => detenerAutoCompetencia(false));
+
+async function iniciarAutoCompetencia() {
+  autoLogList.innerHTML = '<li class="log-empty">Las trovas aparecerán aquí a medida que se detecten.</li>';
+  actualizarDotsAuto();
+  actualizarBannerTurno();
+
+  try {
+    autoStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (err) {
+    autoEstadoTexto.textContent = 'Error de micrófono: ' + err.message;
+    return;
+  }
+
+  autoAudioCtx = new AudioContext();
+  const src = autoAudioCtx.createMediaStreamSource(autoStream);
+  autoAnalyser = autoAudioCtx.createAnalyser();
+  autoAnalyser.fftSize = 256;
+  src.connect(autoAnalyser);
+
+  autoRunning = true;
+  autoBtnSiguiente.disabled = false;
+  iniciarAutoRecorder();
+  monitorearNivelAudio();
+}
+
+function iniciarAutoRecorder() {
+  if (!autoRunning || !autoStream) return;
+  autoChunks = [];
+  autoTrovaStart = Date.now();
+  silenceStart = null;
+  autoRecorder = new MediaRecorder(autoStream, { mimeType: getSupportedMimeType() });
+  autoRecorder.ondataavailable = e => { if (e.data && e.data.size > 0) autoChunks.push(e.data); };
+  autoRecorder.onstop = () => procesarAutoTrova();
+  autoRecorder.start(200);
+}
+
+function monitorearNivelAudio() {
+  if (!autoRunning) return;
+  autoAnimId = requestAnimationFrame(monitorearNivelAudio);
+  if (!autoAnalyser) return;
+
+  const buf = new Uint8Array(autoAnalyser.frequencyBinCount);
+  autoAnalyser.getByteFrequencyData(buf);
+  dibujarAutoCanvas(buf);
+
+  const rms = buf.reduce((s, v) => s + v, 0) / buf.length;
+  const trovaDur = Date.now() - (autoTrovaStart || Date.now());
+
+  if (rms < SILENCE_THRESHOLD && trovaDur > MIN_TROVA_DURATION) {
+    if (!silenceStart) silenceStart = Date.now();
+    const silDur = Date.now() - silenceStart;
+    const pct = Math.min(100, (silDur / SILENCE_DURATION) * 100);
+    autoSilencioBar.style.width = pct + '%';
+    autoSilencioSeg.textContent = (silDur / 1000).toFixed(1) + 's';
+    autoIndicator.className = 'audio-indicator silencio';
+    if (!autoProcessing) autoEstadoTexto.textContent = `Pausa detectada… ${(silDur / 1000).toFixed(1)}s / ${SILENCE_DURATION / 1000}s`;
+
+    if (silDur >= SILENCE_DURATION && !autoProcessing) {
+      silenceStart = null;
+      autoSilencioBar.style.width = '0%';
+      if (autoRecorder && autoRecorder.state === 'recording') autoRecorder.stop();
+    }
+  } else {
+    silenceStart = null;
+    autoSilencioBar.style.width = '0%';
+    autoSilencioSeg.textContent = '—';
+    if (!autoProcessing) {
+      autoIndicator.className = 'audio-indicator grabando';
+      const esT1 = comp.turno % 2 === 0;
+      const ronda = Math.floor(comp.turno / 2) + 1;
+      autoEstadoTexto.textContent = `Grabando — ${esT1 ? comp.t1.nombre : comp.t2.nombre} · Trova ${ronda} de ${comp.numTrovas}`;
+    }
+  }
+}
+
+function dibujarAutoCanvas(buf) {
+  const W = autoCanvas.width = autoCanvas.offsetWidth;
+  const H = autoCanvas.height = 56;
+  const ctx = autoCanvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  const esT1 = comp.turno % 2 === 0;
+  const rgb = esT1 ? '123,111,204' : '232,160,32';
+  const barW = (W / buf.length) * 2;
+  let x = 0;
+  buf.forEach(v => {
+    const h = (v / 255) * H;
+    ctx.fillStyle = `rgba(${rgb},${0.35 + (v / 255) * 0.65})`;
+    ctx.beginPath();
+    ctx.roundRect(x, H - h, Math.max(barW - 2, 1), h, 2);
+    ctx.fill();
+    x += barW + 1;
+  });
+}
+
+async function procesarAutoTrova() {
+  const turnoIdx = comp.turno;
+  const total = comp.numTrovas * 2;
+
+  if (turnoIdx >= total) return;
+
+  const totalSize = autoChunks.reduce((s, c) => s + c.size, 0);
+  if (totalSize < MIN_BLOB_SIZE) {
+    // Demasiado corto — reiniciar sin avanzar
+    if (autoRunning) iniciarAutoRecorder();
+    return;
+  }
+
+  autoProcessing = true;
+  autoBtnSiguiente.disabled = true;
+  autoIndicator.className = 'audio-indicator procesando';
+
+  const esT1 = turnoIdx % 2 === 0;
+  const ronda = Math.floor(turnoIdx / 2) + 1;
+  const trovador = esT1 ? comp.t1 : comp.t2;
+  const lado = esT1 ? 't1' : 't2';
+
+  autoEstadoTexto.textContent = `Procesando trova ${ronda} de ${trovador.nombre}…`;
+  const logRef = agregarLogItem(turnoIdx, ronda, trovador.nombre, lado);
+
+  const blob = new Blob(autoChunks, { type: getSupportedMimeType() || 'audio/webm' });
+
+  try {
+    const form = new FormData();
+    form.append('audio', blob, 'trova.webm');
+    const r1 = await fetch(`${API}/transcribir`, { method: 'POST', body: form });
+    if (!r1.ok) throw new Error((await r1.json()).detail);
+    const { transcripcion } = await r1.json();
+
+    const r2 = await fetch(`${API}/analizar`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ texto: transcripcion, rima_plural: comp.rimaPlural }),
+    });
+    if (!r2.ok) throw new Error((await r2.json()).detail);
+    const data = await r2.json();
+
+    const textoFmt = data.versos && data.versos.length > 1
+      ? data.versos.map(v => v.texto).join('\n') : transcripcion;
+
+    trovador.trovas.push({ texto: textoFmt, analisis: data });
+    comp.turno++;
+
+    actualizarLogItem(logRef, textoFmt, 'ok');
+    actualizarDotsAuto();
+    actualizarBannerTurno();
+
+    if (comp.turno >= total) {
+      autoRunning = false;
+      detenerAutoStream();
+      autoEstadoTexto.textContent = '✓ Competencia completa. Calculando resultados…';
+      autoIndicator.className = 'audio-indicator idle';
+      autoBtnSiguiente.disabled = true;
+      autoBtnDetener.disabled = true;
+      setTimeout(mostrarResultados, 1800);
+    } else {
+      autoProcessing = false;
+      autoBtnSiguiente.disabled = false;
+      if (autoRunning) iniciarAutoRecorder();
+    }
+  } catch (err) {
+    actualizarLogItem(logRef, null, 'error', err.message);
+    autoProcessing = false;
+    autoBtnSiguiente.disabled = false;
+    if (autoRunning) iniciarAutoRecorder();
+  }
+}
+
+function detenerAutoCompetencia(silencioso = false) {
+  autoRunning = false;
+  detenerAutoStream();
+  if (!silencioso) {
+    if (comp.t1.trovas.length > 0 || comp.t2.trovas.length > 0) mostrarResultados();
+    else showView('view-home');
+  }
+}
+
+function detenerAutoStream() {
+  if (autoAnimId) { cancelAnimationFrame(autoAnimId); autoAnimId = null; }
+  if (autoAudioCtx) { autoAudioCtx.close(); autoAudioCtx = null; }
+  if (autoRecorder && autoRecorder.state === 'recording') {
+    autoRecorder.stream.getTracks().forEach(t => t.stop());
+  } else if (autoStream) {
+    autoStream.getTracks().forEach(t => t.stop());
+  }
+  autoStream = null; autoRecorder = null;
+}
+
+function actualizarBannerTurno() {
+  const total = comp.numTrovas * 2;
+  if (comp.turno >= total) {
+    autoPanelHeader.className = 'auto-panel-header idle';
+    autoTurnoTitulo.textContent = '✓ Competencia finalizada';
+    autoTurnoSub.textContent = 'Calculando resultados…';
+    return;
+  }
+  const esT1 = comp.turno % 2 === 0;
+  const ronda = Math.floor(comp.turno / 2) + 1;
+  autoPanelHeader.className = 'auto-panel-header ' + (esT1 ? 't1' : 't2');
+  autoTurnoTitulo.textContent = `${esT1 ? comp.t1.nombre : comp.t2.nombre} · Trova ${ronda} de ${comp.numTrovas}`;
+  autoTurnoSub.textContent = `Turno ${comp.turno + 1} de ${total} — ${esT1 ? 'Trovador 1' : 'Trovador 2'}`;
+}
+
+function actualizarDotsAuto() {
+  const total = comp.numTrovas * 2;
+  autoDotsEl.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    const esT1Dot = i % 2 === 0;
+    if (i < comp.turno)       d.className = 'dot ' + (esT1Dot ? 'done-t1' : 'done-t2');
+    else if (i === comp.turno) d.className = 'dot ' + (esT1Dot ? 'cur-t1' : 'cur-t2');
+    else                       d.className = 'dot';
+    autoDotsEl.appendChild(d);
+  }
+}
+
+// ── Log ───────────────────────────────────────────────────
+function agregarLogItem(turnoIdx, ronda, nombre, lado) {
+  const ph = autoLogList.querySelector('.log-empty');
+  if (ph) ph.remove();
+  const li = document.createElement('li');
+  li.className = 'log-item';
+  li.dataset.turno = turnoIdx;
+  li.innerHTML = `
+    <div class="log-badge proc" id="lb-${turnoIdx}">…</div>
+    <div class="log-info">
+      <div class="log-meta" id="lm-${turnoIdx}">${nombre} · Trova ${ronda}</div>
+      <div class="log-texto" id="lt-${turnoIdx}" style="color:var(--muted);font-style:italic">Procesando…</div>
+    </div>
+    <div class="log-icon" id="li-${turnoIdx}">⏳</div>`;
+  autoLogList.appendChild(li);
+  li.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  return { turnoIdx, lado };
+}
+
+function actualizarLogItem({ turnoIdx, lado }, texto, estado, errMsg = '') {
+  const badge = document.getElementById(`lb-${turnoIdx}`);
+  const textoEl = document.getElementById(`lt-${turnoIdx}`);
+  const iconEl  = document.getElementById(`li-${turnoIdx}`);
+  if (estado === 'ok') {
+    badge.className = 'log-badge ' + lado;
+    badge.textContent = lado === 't1' ? comp.t1.nombre : comp.t2.nombre;
+    textoEl.style.color = ''; textoEl.style.fontStyle = '';
+    textoEl.textContent = texto.split('\n').slice(0, 2).join('\n') + (texto.split('\n').length > 2 ? '\n…' : '');
+    iconEl.textContent = '✓';
+  } else {
+    badge.className = 'log-badge err';
+    badge.textContent = 'Error';
+    textoEl.textContent = errMsg || 'No se pudo procesar';
+    iconEl.textContent = '✗';
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// RESULTADOS
+// ══════════════════════════════════════════════════════════
+function mostrarResultados() {
+  showView('view-comp-resultados');
+  document.getElementById('res-subtitulo').textContent = `${comp.t1.nombre} vs ${comp.t2.nombre} · Tema libre`;
+  const t1 = comp.t1.trovas.reduce((s, t) => s + (t.analisis.puntuacion.total || 0), 0);
+  const t2 = comp.t2.trovas.reduce((s, t) => s + (t.analisis.puntuacion.total || 0), 0);
+  renderColumnaResultados('res-col-t1', comp.t1, t1, 't1');
+  renderColumnaResultados('res-col-t2', comp.t2, t2, 't2');
+  renderGanador(t1, t2);
+}
+
+function renderColumnaResultados(colId, trovador, total, lado) {
+  const col = document.getElementById(colId);
+  const cats = [
+    { key:'estructura', label:'Estr.', max:30, bar:'bar-purple' },
+    { key:'rima',       label:'Rima',  max:40, bar:'bar-blue'   },
+    { key:'metrica',    label:'Mét.',  max:30, bar:'bar-amber'  },
+  ];
+
+  const tarjetas = trovador.trovas.map((t, i) => {
+    const p = t.analisis.puntuacion;
+    const barras = cats.map(c => {
+      const val = p[c.key] || 0;
+      return `<div class="trc-bar-row">
+        <span class="trc-bar-label">${c.label}</span>
+        <div class="trc-bar-track"><div class="trc-bar-fill ${c.bar}" style="width:0" data-pct="${Math.round((val/c.max)*100)}"></div></div>
+        <span class="trc-bar-val">${val}</span>
+      </div>`;
+    }).join('');
+    const lines = t.texto.split('\n');
+    const preview = lines.slice(0, 2).join('\n') + (lines.length > 2 ? '\n…' : '');
+    return `<div class="trova-result-card ${lado}" onclick="abrirModal('${lado}',${i})">
+      <div class="trc-top">
+        <span class="trc-num">Trova ${i + 1}</span>
+        <span class="trc-hint">ver detalle →</span>
+        <span class="trc-score ${lado}">${p.total || 0}<small style="font-size:0.6em;opacity:0.6;font-weight:400"> /100</small></span>
+      </div>
+      <div class="trc-texto">${preview}</div>
+      <div class="trc-bars">${barras}</div>
+    </div>`;
+  }).join('') || `<div class="trova-result-card ${lado}" style="text-align:center;color:var(--muted);font-size:0.84rem;padding:1rem">Sin trovas registradas</div>`;
+
+  col.innerHTML = `
+    <div class="res-header ${lado}">
+      <div class="res-name">${trovador.nombre}</div>
+      <div style="text-align:right">
+        <div class="res-total">${total}</div>
+        <div class="res-total-of">/ ${trovador.trovas.length * 100} pts</div>
+      </div>
+    </div>${tarjetas}`;
+
+  requestAnimationFrame(() => animateBars(col));
+}
+
+function renderGanador(t1, t2) {
+  const banner = document.getElementById('winner-banner');
+  if (t1 === t2) {
+    banner.innerHTML = `<h3>¡Empate! 🤝</h3>
+      <p>${comp.t1.nombre} y ${comp.t2.nombre} terminaron con el mismo puntaje</p>
+      <div class="winner-diff">${t1} pts cada uno</div>`;
+  } else {
+    const ganador  = t1 > t2 ? comp.t1 : comp.t2;
+    const perdedor = t1 > t2 ? comp.t2 : comp.t1;
+    const diff = Math.abs(t1 - t2);
+    banner.innerHTML = `<h3>🏆 Ganador: ${ganador.nombre}</h3>
+      <p>${ganador.nombre} supera a ${perdedor.nombre} por ${diff} puntos</p>
+      <div class="winner-diff">${Math.max(t1,t2)} vs ${Math.min(t1,t2)} · diferencia de ${diff} pts</div>`;
+  }
+}
+
+document.getElementById('btn-nueva-comp').addEventListener('click', () => {
+  document.getElementById('nombre-t1').value = '';
+  document.getElementById('nombre-t2').value = '';
+  showView('view-comp-setup');
+});
+
+// ══════════════════════════════════════════════════════════
+// MODAL — Detalle + corrección de trova
+// ══════════════════════════════════════════════════════════
+let modalLado = null;
+let modalIdx  = -1;
+
+function abrirModal(lado, idx) {
+  modalLado = lado;
+  modalIdx  = idx;
+  const trovador = lado === 't1' ? comp.t1 : comp.t2;
+  const trova = trovador.trovas[idx];
+
+  const badge = document.getElementById('modal-badge');
+  badge.className = 'modal-badge ' + lado;
+  badge.textContent = trovador.nombre;
+  document.getElementById('modal-titulo').textContent = `Trova ${idx + 1}`;
+  document.getElementById('modal-textarea').value = trova.texto;
+  setStatus(document.getElementById('modal-status'), '', '');
+
+  document.getElementById('modal-analisis-body').innerHTML = buildAnalisisHTML(trova.analisis, comp.rimaPlural);
+  document.getElementById('modal-puntajes-body').innerHTML = buildPuntajesHTML(trova.analisis.puntuacion);
+  requestAnimationFrame(() => animateBars(document.getElementById('modal-puntajes-body')));
+
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+
+function cerrarModal() {
+  document.getElementById('modal-overlay').classList.add('hidden');
+  modalLado = null; modalIdx = -1;
+}
+
+document.getElementById('modal-close').addEventListener('click', cerrarModal);
+document.getElementById('modal-backdrop').addEventListener('click', cerrarModal);
+
+document.getElementById('modal-btn-recalificar').addEventListener('click', async () => {
+  const texto = document.getElementById('modal-textarea').value.trim();
+  if (!texto || modalLado === null) return;
+
+  const btn = document.getElementById('modal-btn-recalificar');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loader"></span> Recalificando…';
+  setStatus(document.getElementById('modal-status'), '', '');
+
+  try {
+    const res = await fetch(`${API}/analizar`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ texto, rima_plural: comp.rimaPlural }),
+    });
+    if (!res.ok) throw new Error((await res.json()).detail);
+    const data = await res.json();
+
+    const textoFmt = data.versos && data.versos.length > 1
+      ? data.versos.map(v => v.texto).join('\n') : texto;
+
+    const trovador = modalLado === 't1' ? comp.t1 : comp.t2;
+    trovador.trovas[modalIdx] = { texto: textoFmt, analisis: data };
+
+    document.getElementById('modal-textarea').value = textoFmt;
+    document.getElementById('modal-analisis-body').innerHTML = buildAnalisisHTML(data, comp.rimaPlural);
+    document.getElementById('modal-puntajes-body').innerHTML = buildPuntajesHTML(data.puntuacion);
+    requestAnimationFrame(() => animateBars(document.getElementById('modal-puntajes-body')));
+
+    setStatus(document.getElementById('modal-status'), '✓ Recalificación aplicada', 'ok');
+
+    // Refrescar columna de resultados
+    const t1 = comp.t1.trovas.reduce((s, t) => s + (t.analisis.puntuacion.total || 0), 0);
+    const t2 = comp.t2.trovas.reduce((s, t) => s + (t.analisis.puntuacion.total || 0), 0);
+    renderColumnaResultados('res-col-t1', comp.t1, t1, 't1');
+    renderColumnaResultados('res-col-t2', comp.t2, t2, 't2');
+    renderGanador(t1, t2);
+  } catch (err) {
+    setStatus(document.getElementById('modal-status'), 'Error: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Recalificar con esta transcripción';
+  }
+});
+
+// ══════════════════════════════════════════════════════════
+// Render helpers compartidos
+// ══════════════════════════════════════════════════════════
+function buildAnalisisHTML(d, rimaPlural = false) {
+  const RIMA_COLOR = { consonante:'#065F46', asonante:'#92400E', mixta:'#92400E', libre:'#991B1B', 'sin rima':'#991B1B' };
   const versosHtml = d.versos.map(v => {
-    const pred    = d.silaba_predominante;
-    const signed  = pred ? v.silabas - pred : 0;
+    const pred = d.silaba_predominante;
+    const signed = pred ? v.silabas - pred : 0;
     const absDiff = Math.abs(signed);
-    const cls     = absDiff === 0 ? 'vs-ok' : absDiff <= 1 ? 'vs-mid' : 'vs-mal';
-    const delta   = pred && signed !== 0
-      ? `<span class="vs-delta">${signed > 0 ? '+' : '−'}${absDiff}</span>`
-      : '';
-    const jerga = v.jergas && v.jergas.length
-      ? ` <span style="color:var(--purple);font-size:0.72rem">[${v.jergas.join(', ')}]</span>`
-      : '';
+    const cls = absDiff === 0 ? 'vs-ok' : absDiff <= 1 ? 'vs-mid' : 'vs-mal';
+    const delta = pred && signed !== 0 ? `<span class="vs-delta">${signed > 0 ? '+' : '−'}${absDiff}</span>` : '';
+    const jerga = v.jergas && v.jergas.length ? ` <span style="color:var(--purple);font-size:0.72rem">[${v.jergas.join(', ')}]</span>` : '';
     return `<li class="verse-item">
       <span class="verse-num">${v.numero}.</span>
       <span class="verse-text">${v.texto}${jerga}</span>
       <span class="verse-syl ${cls}">${v.silabas} sil.${delta}</span>
     </li>`;
   }).join('');
-
+  const rimaClr = RIMA_COLOR[d.tipo_rima] || 'var(--muted)';
   const jergasHtml = d.jergas_totales.length
     ? d.jergas_totales.map(j => `<span class="tag">${j}</span>`).join('')
     : `<span style="color:var(--muted);font-size:0.83rem">ninguna detectada</span>`;
 
-  const obsHtml = d.observaciones.map(o => `<li>${o}</li>`).join('');
-
-  const clsTipo  = (d.tipo === 'sencilla' || d.tipo === 'dobleteada') ? 'ok' : 'mal';
-  const rimaBg   = (d.tipo_rima === 'consonante') ? 'var(--green-bg)' : 'var(--amber-bg)';
-  const rimaClr  = RIMA_COLOR[d.tipo_rima] || 'var(--muted)';
-
-  analisisBody.innerHTML = `
+  return `
     <div class="metric-grid">
-      <div class="mc purple">
-        <div class="mc-circle">🎼</div>
-        <div class="mc-info">
-          <div class="mc-label">Tipo</div>
-          <div class="mc-value">${d.tipo}</div>
-        </div>
-      </div>
-      <div class="mc amber">
-        <div class="mc-circle">🔢</div>
-        <div class="mc-info">
-          <div class="mc-label">Versos</div>
-          <div class="mc-value">${d.num_versos}</div>
-        </div>
-      </div>
-      <div class="mc blue">
-        <div class="mc-circle">🎵</div>
-        <div class="mc-info">
-          <div class="mc-label">Rima</div>
-          <div class="mc-value" style="color:${rimaClr}">
-            ${d.tipo_rima}${rimaPlural ? '<span class="plural-badge">plural ✓</span>' : ''}
-          </div>
-        </div>
-      </div>
-      <div class="mc pink">
-        <div class="mc-circle">📏</div>
-        <div class="mc-info">
-          <div class="mc-label">Métrica</div>
-          <div class="mc-value">${d.silaba_predominante || '?'} síl.</div>
-        </div>
-      </div>
+      <div class="mc purple"><div class="mc-circle">🎼</div><div class="mc-info">
+        <div class="mc-label">Tipo</div><div class="mc-value">${d.tipo}</div></div></div>
+      <div class="mc amber"><div class="mc-circle">🔢</div><div class="mc-info">
+        <div class="mc-label">Versos</div><div class="mc-value">${d.num_versos}</div></div></div>
+      <div class="mc blue"><div class="mc-circle">🎵</div><div class="mc-info">
+        <div class="mc-label">Rima</div>
+        <div class="mc-value" style="color:${rimaClr}">${d.tipo_rima}${rimaPlural ? '<span class="plural-badge">plural ✓</span>' : ''}</div></div></div>
+      <div class="mc pink"><div class="mc-circle">📏</div><div class="mc-info">
+        <div class="mc-label">Métrica</div><div class="mc-value">${d.silaba_predominante || '?'} síl.</div></div></div>
     </div>
-
     <div class="rhyme-scheme">${d.esquema_rima || '?'}</div>
-
-    <p class="section-label">
-      Versos
-      ${d.silaba_predominante
-        ? `<span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">— objetivo ${d.silaba_predominante} sílabas</span>`
-        : ''}
-    </p>
+    <p class="section-label">Versos${d.silaba_predominante
+      ? ` <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">— objetivo ${d.silaba_predominante} sílabas</span>` : ''}</p>
     <ul class="verses-list">${versosHtml}</ul>
-
     <p class="section-label">Jergas detectadas</p>
     <div style="margin-bottom:1rem">${jergasHtml}</div>
-
     <p class="section-label">Observaciones</p>
-    <ul class="obs-list">${obsHtml}</ul>
-  `;
+    <ul class="obs-list">${d.observaciones.map(o => `<li>${o}</li>`).join('')}</ul>`;
 }
 
-function renderPuntajes(p) {
+function buildPuntajesHTML(p) {
   const cats = [
-    { key: 'estructura', label: 'Estructura', max: 30, bar: 'bar-purple' },
-    { key: 'rima',       label: 'Rima',       max: 40, bar: 'bar-blue'   },
-    { key: 'metrica',    label: 'Métrica',    max: 30, bar: 'bar-amber'  },
+    { key:'estructura', label:'Estructura', max:30, bar:'bar-purple' },
+    { key:'rima',       label:'Rima',       max:40, bar:'bar-blue'   },
+    { key:'metrica',    label:'Métrica',    max:30, bar:'bar-amber'  },
   ];
-
   const barras = cats.map(c => {
     const val = p[c.key] || 0;
-    const pct = Math.round((val / c.max) * 100);
     return `<div class="bar-wrap">
       <div class="bar-labels"><span>${c.label}</span><span>${val} / ${c.max}</span></div>
-      <div class="bar-track">
-        <div class="bar-fill ${c.bar}" style="width:0" data-pct="${pct}"></div>
-      </div>
+      <div class="bar-track"><div class="bar-fill ${c.bar}" style="width:0" data-pct="${Math.round((val/c.max)*100)}"></div></div>
     </div>`;
   }).join('');
+  return `<div class="score-hero"><span class="score-number">${p.total||0}</span><span class="score-of">/ 100 pts</span></div>${barras}`;
+}
 
-  puntajesBody.innerHTML = `
-    <div class="score-hero">
-      <span class="score-number">${p.total || 0}</span>
-      <span class="score-of">/ 100 pts</span>
-    </div>
-    ${barras}
-  `;
-
-  requestAnimationFrame(() => {
-    puntajesBody.querySelectorAll('.bar-fill').forEach(el => {
-      el.style.width = el.dataset.pct + '%';
-    });
+function animateBars(container) {
+  container.querySelectorAll('.bar-fill, .trc-bar-fill').forEach(el => {
+    el.style.width = el.dataset.pct + '%';
   });
 }
 
-// ── Utilidades ────────────────────────────────────────────
-function setStatus(msg, tipo) {
-  statusEl.textContent = msg;
-  statusEl.className = 'status' + (tipo ? ' ' + tipo : '');
+function setStatus(el, msg, tipo) {
+  el.textContent = msg;
+  el.className = 'status' + (tipo ? ' ' + tipo : '');
 }
+
+// Individal mode necesita sus propios renders
+function renderAnalisisInd(data, rimaPlural) {
+  document.getElementById('analisis-body').innerHTML = buildAnalisisHTML(data, rimaPlural);
+}
+function renderPuntajesInd(p) {
+  document.getElementById('puntajes-body').innerHTML = buildPuntajesHTML(p);
+  requestAnimationFrame(() => animateBars(document.getElementById('puntajes-body')));
+}
+
+showView('view-home');
 </script>
 </body>
 </html>
